@@ -1,6 +1,8 @@
 package com.guvyerhopkins.nautilus.network
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 //data class CardsResponse(
 //    @SerializedName("next_page")
@@ -20,94 +22,98 @@ data class MagicCardsResponse(
     val cards: List<Card>
 )
 
+@Parcelize
 data class Card(
     @SerializedName("artist")
-    val artist: String,
+    val artist: String?,
     @SerializedName("cmc")
-    val cmc: Double,
+    val cmc: Double?,
     @SerializedName("colorIdentity")
-    val colorIdentity: List<String>,
+    val colorIdentity: List<String>?,
     @SerializedName("colors")
-    val colors: List<String>,
+    val colors: List<String>?,
     @SerializedName("flavor")
-    val flavor: String,
+    val flavor: String?,
     @SerializedName("foreignNames")
-    val foreignNames: List<ForeignName>,
+    val foreignNames: List<ForeignName>?,
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("imageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerializedName("layout")
-    val layout: String,
+    val layout: String?,
     @SerializedName("legalities")
-    val legalities: List<Legality>,
+    val legalities: List<Legality>?,
     @SerializedName("manaCost")
-    val manaCost: String,
+    val manaCost: String?,
     @SerializedName("multiverseid")
-    val multiverseid: String,
+    val multiverseid: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("number")
-    val number: String,
+    val number: String?,
     @SerializedName("originalText")
-    val originalText: String,
+    val originalText: String?,
     @SerializedName("originalType")
-    val originalType: String,
+    val originalType: String?,
     @SerializedName("power")
-    val power: String,
+    val power: String?,
     @SerializedName("printings")
-    val printings: List<String>,
+    val printings: List<String>?,
     @SerializedName("rarity")
-    val rarity: String,
+    val rarity: String?,
     @SerializedName("rulings")
-    val rulings: List<Ruling>,
+    val rulings: List<Ruling>?,
     @SerializedName("set")
-    val `set`: String,
+    val `set`: String?,
     @SerializedName("setName")
-    val setName: String,
+    val setName: String?,
     @SerializedName("subtypes")
-    val subtypes: List<String>,
+    val subtypes: List<String>?,
     @SerializedName("supertypes")
-    val supertypes: List<String>,
+    val supertypes: List<String>?,
     @SerializedName("text")
-    val text: String,
+    val text: String?,
     @SerializedName("toughness")
-    val toughness: String,
+    val toughness: String?,
     @SerializedName("type")
-    val type: String,
+    val type: String?,
     @SerializedName("types")
-    val types: List<String>,
+    val types: List<String>?,
     @SerializedName("variations")
-    val variations: List<String>
-)
+    val variations: List<String>?
+) : Parcelable
 
+@Parcelize
 data class ForeignName(
     @SerializedName("flavor")
-    val flavor: String,
+    val flavor: String?,
     @SerializedName("imageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerializedName("language")
-    val language: String,
+    val language: String?,
     @SerializedName("multiverseid")
-    val multiverseid: Int,
+    val multiverseid: Int?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("text")
-    val text: String,
+    val text: String?,
     @SerializedName("type")
-    val type: String
-)
+    val type: String?
+) : Parcelable
 
+@Parcelize
 data class Legality(
     @SerializedName("format")
-    val format: String,
+    val format: String?,
     @SerializedName("legality")
-    val legality: String
-)
+    val legality: String?
+) : Parcelable
 
+@Parcelize
 data class Ruling(
     @SerializedName("date")
-    val date: String,
+    val date: String?,
     @SerializedName("text")
-    val text: String
-)
+    val text: String?
+) : Parcelable

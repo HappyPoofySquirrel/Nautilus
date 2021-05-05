@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.guvyerhopkins.nautilus.R
 import com.guvyerhopkins.nautilus.network.State
@@ -15,13 +16,11 @@ import com.guvyerhopkins.nautilus.ui.detail.ImageDetailActivity
 class SearchActivity : AppCompatActivity() {
 
     /**
-     * Todo Bonus
+     * Todo
      * handle no results
-     * figure out why there is such a delay from the network request completing to showing any images
      * handle no internet
      * support portrait and landscape
-     * Understand the memory profile
-     * Write documentation using KDoc
+     * Write documentation
      * More Unit tests
      * Night mode
      * Update app icon
@@ -41,15 +40,17 @@ class SearchActivity : AppCompatActivity() {
 
         searchViewModel =
             ViewModelProvider(this, SearchViewModelFactory()).get(SearchViewModel::class.java)
-        val adapter = CardAdapter { url, imageView ->
+        val cardAdapter = CardAdapter { card, imageView ->
             //keep imageview parameter for use with a shared element transition
-            startActivity(ImageDetailActivity.createIntent(this, url))
+            startActivity(ImageDetailActivity.createIntent(this, card))
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.search_rv)
-        recyclerView.adapter = adapter
 
+        findViewById<RecyclerView>(R.id.search_rv).apply {
+            adapter = cardAdapter
+            addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
+        }
         searchViewModel.cards.observe(this, { photos ->
-            adapter.submitList(photos)
+            cardAdapter.submitList(photos)
         })
 
         val editText = findViewById<EditText>(R.id.search_et)

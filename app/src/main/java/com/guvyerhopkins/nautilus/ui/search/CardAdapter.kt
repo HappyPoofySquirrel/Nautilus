@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.size.Scale
 import com.guvyerhopkins.nautilus.R
 import com.guvyerhopkins.nautilus.network.Card
+import com.squareup.picasso.Picasso
 
-class CardAdapter(private val onCardPressed: (String, ImageView) -> Unit) :
+class CardAdapter(private val onCardPressed: (Card, ImageView) -> Unit) :
     PagedListAdapter<Card, CardAdapter.CardGridViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
@@ -38,16 +38,22 @@ class CardAdapter(private val onCardPressed: (String, ImageView) -> Unit) :
 
         fun bind(card: Card) {
             val imageView = view.findViewById<ImageView>(R.id.card_item_iv)
-            imageView.load(card.imageUrl) {
-                scale(Scale.FILL)
-                crossfade(true)
-                placeholder(R.drawable.ic_image_placeholder)
+            card.imageUrl?.let {
+//                imageView.load(it) {
+//                    scale(Scale.FILL)
+//                    crossfade(true)
+//                    placeholder(R.drawable.ic_image_placeholder)
+//                }
+                Picasso.get()
+                    .load(it)
+                    .placeholder(R.drawable.ic_image_placeholder)
+                    .into(imageView)
             }
+            view.findViewById<TextView>(R.id.card_item_tv).text = card.name
 
-            view.setOnClickListener { onCardPressed.invoke(card.imageUrl, imageView) }
+            view.setOnClickListener { onCardPressed.invoke(card, imageView) }
         }
     }
-
     companion object DiffCallback : DiffUtil.ItemCallback<Card>() {
         override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
             return oldItem.id == newItem.id

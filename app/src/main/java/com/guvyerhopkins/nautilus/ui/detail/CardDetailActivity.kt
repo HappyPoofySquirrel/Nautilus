@@ -3,19 +3,21 @@ package com.guvyerhopkins.nautilus.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import coil.load
 import com.guvyerhopkins.nautilus.R
-import com.jsibbold.zoomage.ZoomageView
+import com.guvyerhopkins.nautilus.network.Card
+import com.squareup.picasso.Picasso
 
-const val IMAGE_URL_KEY = "IMAGE_URL_KEY"
+const val CARD_KEY = "CARD_KEY"
 
 class ImageDetailActivity : AppCompatActivity() {
 
     companion object {
-        fun createIntent(context: Context, url: String): Intent {
+        fun createIntent(context: Context, card: Card): Intent {
             return Intent(context, ImageDetailActivity::class.java).apply {
-                putExtra(IMAGE_URL_KEY, url)
+                putExtra(CARD_KEY, card)
             }
         }
     }
@@ -24,7 +26,20 @@ class ImageDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail)
 
-        val imageView = findViewById<ZoomageView>(R.id.details_iv)
-        imageView.load(intent.extras!!.getString(IMAGE_URL_KEY))
+        val card = intent.extras!!.getParcelable<Card>(CARD_KEY)!!
+
+
+
+        card.imageUrl?.let {
+            Picasso.get()
+                .load(it)
+                .placeholder(R.drawable.ic_image_placeholder)
+                .into(findViewById<ImageView>(R.id.details_iv))
+        }
+
+        findViewById<TextView>(R.id.details_name_tv).text =
+            getString(R.string.monster_name, card.name)
+        findViewById<TextView>(R.id.details_type_tv).text =
+            getString(R.string.monster_type, card.type)
     }
 }

@@ -35,7 +35,7 @@
                 android:background="?selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="8dp"
+                android:padding="@dimen/margin_small"
                 android:src="@drawable/ic_baseline_search_24" />
 
             <EditText
@@ -43,8 +43,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:imeOptions="actionDone"
                 android:gravity="center_vertical"
-                android:padding="8dp"
+                android:inputType="textImeMultiLine"
+                android:padding="@dimen/margin_small"
                 android:textColor="@color/purple_700"
                 tools:text="discovery" />
         </LinearLayout>
