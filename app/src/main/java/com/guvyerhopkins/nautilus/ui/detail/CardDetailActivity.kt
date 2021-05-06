@@ -28,8 +28,6 @@ class ImageDetailActivity : AppCompatActivity() {
 
         val card = intent.extras!!.getParcelable<Card>(CARD_KEY)!!
 
-
-
         card.imageUrl?.let {
             Picasso.get()
                 .load(it)
@@ -42,4 +40,5 @@ class ImageDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.details_type_tv).text =
             getString(R.string.monster_type, card.type)
     }
+
 }

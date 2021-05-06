@@ -39,11 +39,6 @@ class CardAdapter(private val onCardPressed: (Card, ImageView) -> Unit) :
         fun bind(card: Card) {
             val imageView = view.findViewById<ImageView>(R.id.card_item_iv)
             card.imageUrl?.let {
-//                imageView.load(it) {
-//                    scale(Scale.FILL)
-//                    crossfade(true)
-//                    placeholder(R.drawable.ic_image_placeholder)
-//                }
                 Picasso.get()
                     .load(it)
                     .placeholder(R.drawable.ic_image_placeholder)

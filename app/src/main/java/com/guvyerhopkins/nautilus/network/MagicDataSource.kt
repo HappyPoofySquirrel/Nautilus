@@ -39,7 +39,7 @@ class MagicDataSource(private val query: String, private val scope: CoroutineSco
     private fun executeQuery(page: Int, perPage: Int, callback: (List<Card>) -> Unit) {
         networkState.postValue(State.LOADING)
         scope.launch(getJobErrorHandler() + supervisorJob) {
-            delay(1000) //todo 1 second debounce
+            delay(1000)
             val photos = repo.getCards(page, perPage, query)
 
             networkState.postValue(State.SUCCESS)
