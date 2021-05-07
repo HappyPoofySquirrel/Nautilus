@@ -1,24 +1,24 @@
 package com.guvyerhopkins.nautilus.network
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 
-//data class CardsResponse(
-//    @SerializedName("next_page")
-//    val nextPage: String = "",
-//    @SerializedName("page")
-//    val page: Int = 0,
-//    @SerializedName("per_page")
-//    val perPage: Int = 0,
-//    @SerializedName("photos")
-//    val photos: List<Photo> = listOf(),
-//    @SerializedName("total_results")
-//    val totalResults: Int = 0
-//)
-
+@Entity(tableName = "cards")
 data class MagicCardsResponse(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val createdTime: Long = System.currentTimeMillis(),
+    val query: String = "",
+    val page: Int = 0,
     @SerializedName("cards")
+    @TypeConverters(CardTypeConverter::class)
     val cards: List<Card>
 )
 
@@ -117,3 +117,18 @@ data class Ruling(
     @SerializedName("text")
     val text: String?
 ) : Parcelable
+
+class CardTypeConverter {
+
+    @TypeConverter
+    fun fromCardsList(cards: List<Card>): String? {
+        val type = object : TypeToken<List<Card>>() {}.type
+        return Gson().toJson(cards, type)
+    }
+
+    @TypeConverter
+    fun toCardsList(cards: String?): List<Card>? {
+        val type = object : TypeToken<List<Card>>() {}.type
+        return Gson().fromJson<List<Card>>(cards, type)
+    }
+}
