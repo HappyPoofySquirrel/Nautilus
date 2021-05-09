@@ -6,10 +6,12 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:contentDescription="@string/content_description_image_of_search_query"
         android:id="@+id/details_iv"
         android:layout_width="@dimen/card_image_width"
         android:layout_height="@dimen/card_image_height"
         android:layout_marginTop="@dimen/margin_small"
+        android:transitionName="@string/card_search_transition"
         android:src="@drawable/ic_image_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

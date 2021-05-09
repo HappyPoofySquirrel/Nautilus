@@ -5,6 +5,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +28,6 @@ class SearchActivity : AppCompatActivity() {
      * Update app icon
      * Implement paging from database instead of seperate columns for each page
      * Loading list item for adapter when next pagination call is being made
-     * Shared element transition for image press to detail view
      */
     private lateinit var searchViewModel: SearchViewModel
 
@@ -46,8 +46,16 @@ class SearchActivity : AppCompatActivity() {
                 SearchViewModelFactory(AppDatabase.getInstance(this).cardsDao())
             ).get(SearchViewModel::class.java)
         val cardAdapter = CardAdapter { card, imageView ->
-            //keep imageview parameter for use with a shared element transition
-            startActivity(ImageDetailActivity.createIntent(this, card))
+            val activityOptionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this,
+                    imageView,
+                    getString(R.string.card_search_transition)
+                )
+            startActivity(
+                ImageDetailActivity.createIntent(this, card),
+                activityOptionsCompat.toBundle()
+            )
         }
 
         findViewById<RecyclerView>(R.id.search_rv).apply {

@@ -4,4 +4,6 @@
     <string name="monster_type">Type: %1$s</string>
     <string name="search_no_results">No results. Please try a new search.</string>
     <string name="search_error">An error has occurred when fetching cards</string>
+    <string name="card_search_transition">cardSearch</string>
+    <string name="content_description_image_of_search_query">Image of search query</string>
 </resources>

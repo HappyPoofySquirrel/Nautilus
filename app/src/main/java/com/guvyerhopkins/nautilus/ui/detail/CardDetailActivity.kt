@@ -3,6 +3,7 @@ package com.guvyerhopkins.nautilus.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -42,4 +43,11 @@ class ImageDetailActivity : AppCompatActivity() {
             getString(R.string.monster_type, card.type)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId === android.R.id.home) {
+            supportFinishAfterTransition()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

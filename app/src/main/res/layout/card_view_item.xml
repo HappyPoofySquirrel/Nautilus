@@ -7,10 +7,12 @@
 
     <ImageView
         android:id="@+id/card_item_iv"
+        android:contentDescription="@string/content_description_image_of_search_query"
         android:layout_width="@dimen/card_image_width"
         android:layout_height="@dimen/card_image_height"
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
+        android:transitionName="@string/card_search_transition"
         android:src="@drawable/ic_image_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +23,7 @@
         android:id="@+id/card_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="@dimen/margin_small"
         android:ellipsize="end"
         android:maxLines="4"
