@@ -13,11 +13,11 @@ import com.squareup.picasso.Picasso
 
 private const val CARD_KEY = "CARD_KEY"
 
-class ImageDetailActivity : AppCompatActivity() {
+class CardDetailActivity : AppCompatActivity() {
 
     companion object {
         fun createIntent(context: Context, card: Card): Intent {
-            return Intent(context, ImageDetailActivity::class.java).apply {
+            return Intent(context, CardDetailActivity::class.java).apply {
                 putExtra(CARD_KEY, card)
             }
         }

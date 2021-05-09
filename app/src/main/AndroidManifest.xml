@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.guvyerhopkins.nautilus.ui.detail.ImageDetailActivity"
+            android:name="com.guvyerhopkins.nautilus.ui.detail.CardDetailActivity"
             android:parentActivityName=".ui.search.SearchActivity" />
     </application>
 

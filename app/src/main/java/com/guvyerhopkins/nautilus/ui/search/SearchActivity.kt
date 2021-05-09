@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.guvyerhopkins.nautilus.R
 import com.guvyerhopkins.nautilus.core.data.AppDatabase
 import com.guvyerhopkins.nautilus.core.network.NetworkState
-import com.guvyerhopkins.nautilus.ui.detail.ImageDetailActivity
+import com.guvyerhopkins.nautilus.ui.detail.CardDetailActivity
 import java.util.*
 
 class SearchActivity : AppCompatActivity() {
@@ -53,7 +53,7 @@ class SearchActivity : AppCompatActivity() {
                     getString(R.string.card_search_transition)
                 )
             startActivity(
-                ImageDetailActivity.createIntent(this, card),
+                CardDetailActivity.createIntent(this, card),
                 activityOptionsCompat.toBundle()
             )
         }
