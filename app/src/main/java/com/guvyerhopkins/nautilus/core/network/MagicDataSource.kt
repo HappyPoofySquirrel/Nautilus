@@ -22,7 +22,7 @@ class MagicDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Card>
     ) {
-        if (query.isNotEmpty()) {
+        if (query.isNotEmpty()) {//this prevents searching on initialization
             executeQuery(1, params.requestedLoadSize) {
                 callback.onResult(it, null, 2)
             }

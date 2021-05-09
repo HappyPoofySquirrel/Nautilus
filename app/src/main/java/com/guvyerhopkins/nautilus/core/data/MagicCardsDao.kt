@@ -14,5 +14,4 @@ interface MagicCardsDao {
 
     @Delete
     fun delete(cardsResponse: MagicCardsResponse)
-
 }
