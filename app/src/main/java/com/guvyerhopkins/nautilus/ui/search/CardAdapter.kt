@@ -9,7 +9,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.guvyerhopkins.nautilus.R
-import com.guvyerhopkins.nautilus.network.Card
+import com.guvyerhopkins.nautilus.core.network.Card
 import com.squareup.picasso.Picasso
 
 class CardAdapter(private val onCardPressed: (Card, ImageView) -> Unit) :

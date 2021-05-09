@@ -11,16 +11,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.guvyerhopkins.nautilus.R
-import com.guvyerhopkins.nautilus.data.AppDatabase
-import com.guvyerhopkins.nautilus.network.State
+import com.guvyerhopkins.nautilus.core.data.AppDatabase
+import com.guvyerhopkins.nautilus.core.network.NetworkState
 import com.guvyerhopkins.nautilus.ui.detail.ImageDetailActivity
+import java.util.*
 
 class SearchActivity : AppCompatActivity() {
 
     /**
      * Todo
-     * handle no internet
-     * support portrait and landscape
+     * Handle no internet
      * Write documentation
      * More Unit tests
      * Night mode
@@ -55,21 +55,22 @@ class SearchActivity : AppCompatActivity() {
             addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
         }
         searchViewModel.cards.observe(this, { cards ->
-            if (cards.isNullOrEmpty()) {
-                Toast.makeText(this, "No results. Please try a new search.", Toast.LENGTH_LONG)
-            }
             cardAdapter.submitList(cards)
         })
 
         val editText = findViewById<EditText>(R.id.search_et)
         editText.addTextChangedListener {
-            searchViewModel.search(it.toString())
+            searchViewModel.search(it.toString().toLowerCase(Locale.getDefault()))
         }
 
         searchViewModel.networkState?.observe(this, {
-            progressBar.isVisible = it == State.LOADING
-            if (it == State.ERROR) {
-                Toast.makeText(this, "An error has occurred when fetching cards", Toast.LENGTH_LONG)
+            progressBar.isVisible = it == NetworkState.LOADING
+            if (it == NetworkState.ERROR) {
+                Toast.makeText(this, getString(R.string.search_error), Toast.LENGTH_LONG).show()
+            } else if (it == NetworkState.ZERORESULTS) {
+                Toast.makeText(this, getString(R.string.search_no_results), Toast.LENGTH_LONG)
+                    .show()
+
             }
         })
     }

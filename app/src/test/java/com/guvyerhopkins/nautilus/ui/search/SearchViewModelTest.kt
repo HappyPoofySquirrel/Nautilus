@@ -1,6 +1,7 @@
 package com.guvyerhopkins.nautilus.ui.search
 
-import com.guvyerhopkins.nautilus.network.MagicDataSourceFactory
+import com.guvyerhopkins.nautilus.core.data.MagicCardsDao
+import com.guvyerhopkins.nautilus.core.network.MagicDataSourceFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.junit.Before
@@ -15,7 +16,11 @@ class SearchViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = SearchViewModel(CoroutineScope(Dispatchers.Main), dataSourceFactory)
+        viewModel = SearchViewModel(
+            mock(MagicCardsDao::class.java),
+            CoroutineScope(Dispatchers.Main),
+            dataSourceFactory
+        )
     }
 
     @Test

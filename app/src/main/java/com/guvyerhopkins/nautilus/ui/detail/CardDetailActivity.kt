@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.guvyerhopkins.nautilus.R
-import com.guvyerhopkins.nautilus.network.Card
+import com.guvyerhopkins.nautilus.core.network.Card
 import com.squareup.picasso.Picasso
 
-const val CARD_KEY = "CARD_KEY"
+private const val CARD_KEY = "CARD_KEY"
 
 class ImageDetailActivity : AppCompatActivity() {
 
@@ -25,6 +25,7 @@ class ImageDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val card = intent.extras!!.getParcelable<Card>(CARD_KEY)!!
 

@@ -2,7 +2,7 @@ package com.guvyerhopkins.nautilus.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.guvyerhopkins.nautilus.data.MagicCardsDao
+import com.guvyerhopkins.nautilus.core.data.MagicCardsDao
 
 
 class SearchViewModelFactory(private val cardsDao: MagicCardsDao) :

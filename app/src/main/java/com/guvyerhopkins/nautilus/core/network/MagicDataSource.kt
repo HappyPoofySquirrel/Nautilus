@@ -1,10 +1,10 @@
-package com.guvyerhopkins.nautilus.network
+package com.guvyerhopkins.nautilus.core.network
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.guvyerhopkins.nautilus.data.MagicCardsDao
+import com.guvyerhopkins.nautilus.core.data.MagicCardsDao
 import kotlinx.coroutines.*
 
 class MagicDataSource(
@@ -15,15 +15,17 @@ class MagicDataSource(
     PageKeyedDataSource<Int, Card>() {
 
     private val repo = MagicRepository(MagicApi.retrofitSeservice, cardsDao)
-    private val networkState = MutableLiveData<State>()
+    private val networkState = MutableLiveData<NetworkState>()
     private var supervisorJob = SupervisorJob()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Card>
     ) {
-        executeQuery(1, params.requestedLoadSize) {
-            callback.onResult(it, null, 2)
+        if (query.isNotEmpty()) {
+            executeQuery(1, params.requestedLoadSize) {
+                callback.onResult(it, null, 2)
+            }
         }
     }
 
@@ -42,45 +44,36 @@ class MagicDataSource(
     }
 
     private fun executeQuery(page: Int, perPage: Int, callback: (List<Card>) -> Unit) {
-        networkState.postValue(State.LOADING)
+        networkState.postValue(NetworkState.LOADING)
         scope.launch(getJobErrorHandler() + supervisorJob) {
             delay(1000) // 1 second debounce
-
-//            withContext(scope.coroutineContext) {
             val databaseCards = repo.getCardsFromDataBase(page, query)
 
-            Log.d("GuyverLog", "hit after getting databasecardsx")
-
             val cards = if (databaseCards.isNullOrEmpty()) {
-
-//                val networkCards = withContext(scope.coroutineContext) {
                 val networkCards = repo.getCards(page, perPage, query)
-//                }
-                Log.d("GuyverLog", "hit after calling network")
-
                 if (networkCards.isNotEmpty()) {
-                    Log.d("GuyverLog", "insert into database")
+                    Log.d("NautilusLog", "Inserting into database")
                     repo.insertIntoDataBase(networkCards, query, page)
                 }
-                Log.d("GuyverLog", "returning network cards. Count: ${networkCards.size}")
+                Log.d("NautilusLog", "Using network response")
                 networkCards
             } else {
-                Log.d("GuyverLog", "returning database cards")
+                Log.d("NautilusLog", "Using cached response")
                 databaseCards
             }
 
-//            val cards =                     repo.getCards(page, perPage, query)
+            if (cards.isEmpty()) {
+                networkState.postValue(NetworkState.ZERORESULTS)
+            }
 
-            Log.d("GuyverLog", "hitting callback")
-            networkState.postValue(State.SUCCESS)
+            networkState.postValue(NetworkState.SUCCESS)
             callback(cards)
-//            }
         }
     }
 
     private fun getJobErrorHandler() = CoroutineExceptionHandler { _, e ->
         Log.e(MagicCardsResponse::class.java.simpleName, "An error happened: $e")
-        networkState.postValue(State.ERROR)
+        networkState.postValue(NetworkState.ERROR)
     }
 
     override fun invalidate() {
@@ -90,6 +83,6 @@ class MagicDataSource(
 
     fun refresh() = this.invalidate()
 
-    fun getNetworkState(): LiveData<State> =
+    fun getNetworkState(): LiveData<NetworkState> =
         networkState
 }

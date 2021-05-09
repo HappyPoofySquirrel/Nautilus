@@ -1,4 +1,4 @@
-package com.guvyerhopkins.nautilus.network
+package com.guvyerhopkins.nautilus.core.network
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -14,7 +14,7 @@ import kotlinx.parcelize.Parcelize
 data class MagicCardsResponse(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val createdTime: Long = System.currentTimeMillis(),
+    var createdTime: Long = System.currentTimeMillis(),
     val query: String = "",
     val page: Int = 0,
     @SerializedName("cards")

@@ -1,4 +1,4 @@
-package com.guvyerhopkins.nautilus.network
+package com.guvyerhopkins.nautilus.core.network
 
 import com.guvyerhopkins.nautilus.BuildConfig.MAGIC_API_BASE_URL
 import okhttp3.OkHttpClient

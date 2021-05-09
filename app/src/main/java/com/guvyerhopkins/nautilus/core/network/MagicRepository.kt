@@ -1,8 +1,6 @@
-package com.guvyerhopkins.nautilus.network
+package com.guvyerhopkins.nautilus.core.network
 
-import android.util.Log
-import com.guvyerhopkins.nautilus.data.MagicCardsDao
-import com.guvyerhopkins.nautilus.data.RawQueries
+import com.guvyerhopkins.nautilus.core.data.MagicCardsDao
 import java.util.*
 
 class MagicRepository(private val service: MagicApiService, private val cardsDao: MagicCardsDao) {
@@ -26,14 +24,10 @@ class MagicRepository(private val service: MagicApiService, private val cardsDao
     ): List<Card> {
         if (query.isEmpty()) return listOf()
 
-        val databaseCards = cardsDao.getCards(RawQueries.getCardsQuery(query, page))
-        Log.d("GuyverLog", "database cards empty: ${databaseCards == null}")
-
+        val databaseCards = cardsDao.getCards(query, page)
         return if (databaseCards != null && isWithinAppropriateTime(databaseCards)) {
-            Log.d("GuyverLog", "returning database cards from repo")
             databaseCards.cards
         } else {
-            Log.d("GuyverLog", "returning empty list from database cards")
             listOf()
         }
     }
@@ -41,13 +35,11 @@ class MagicRepository(private val service: MagicApiService, private val cardsDao
     private fun isWithinAppropriateTime(databaseCards: MagicCardsResponse): Boolean {
         val date = Date(databaseCards.createdTime)
         val day = 24 * 60 * 60 * 1000
-        val isWithinTimeLimit = date.time < System.currentTimeMillis() - day
+        val isWithinTimeLimit = date.time > System.currentTimeMillis() - day
         if (!isWithinTimeLimit) {
-            Log.d("GuyverLog", "deleting database cards")
             cardsDao.delete(databaseCards)
         }
-
-        return date.time < System.currentTimeMillis() - day
+        return isWithinTimeLimit
     }
 
     fun insertIntoDataBase(cards: List<Card>, query: String, page: Int) {

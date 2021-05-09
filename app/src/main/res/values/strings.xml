@@ -2,4 +2,6 @@
     <string name="app_name">Magic: The Gathering</string>
     <string name="monster_name">Name: %1$s</string>
     <string name="monster_type">Type: %1$s</string>
+    <string name="search_no_results">No results. Please try a new search.</string>
+    <string name="search_error">An error has occurred when fetching cards</string>
 </resources>

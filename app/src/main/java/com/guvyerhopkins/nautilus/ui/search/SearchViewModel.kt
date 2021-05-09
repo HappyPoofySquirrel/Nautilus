@@ -5,16 +5,15 @@ import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.guvyerhopkins.nautilus.data.MagicCardsDao
-import com.guvyerhopkins.nautilus.network.MagicDataSourceFactory
-import com.guvyerhopkins.nautilus.network.State
+import com.guvyerhopkins.nautilus.core.data.MagicCardsDao
+import com.guvyerhopkins.nautilus.core.network.MagicDataSourceFactory
+import com.guvyerhopkins.nautilus.core.network.NetworkState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 
-
 class SearchViewModel(
-    private val cardsDao: MagicCardsDao,
+    cardsDao: MagicCardsDao,
     private val ioScope: CoroutineScope = CoroutineScope(Dispatchers.Default),
     private val dataSourceFactory: MagicDataSourceFactory = MagicDataSourceFactory(
         scope = ioScope,
@@ -22,7 +21,7 @@ class SearchViewModel(
     ),
 ) : ViewModel() {
 
-    val networkState: LiveData<State>? =
+    val networkState: LiveData<NetworkState>? =
         switchMap(dataSourceFactory.source) { it.getNetworkState() }
 
     val cards = LivePagedListBuilder(

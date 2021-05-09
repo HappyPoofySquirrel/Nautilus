@@ -1,8 +1,8 @@
-package com.guvyerhopkins.nautilus.network
+package com.guvyerhopkins.nautilus.core.network
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.guvyerhopkins.nautilus.data.MagicCardsDao
+import com.guvyerhopkins.nautilus.core.data.MagicCardsDao
 import kotlinx.coroutines.CoroutineScope
 
 class MagicDataSourceFactory(

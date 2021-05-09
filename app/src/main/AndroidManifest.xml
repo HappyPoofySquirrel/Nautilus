@@ -23,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.guvyerhopkins.nautilus.ui.detail.ImageDetailActivity" />
+        <activity
+            android:name="com.guvyerhopkins.nautilus.ui.detail.ImageDetailActivity"
+            android:parentActivityName=".ui.search.SearchActivity" />
     </application>
 
 </manifest>

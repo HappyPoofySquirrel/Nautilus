@@ -1,12 +1,12 @@
-package com.guvyerhopkins.nautilus.data
+package com.guvyerhopkins.nautilus.core.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.guvyerhopkins.nautilus.network.CardTypeConverter
-import com.guvyerhopkins.nautilus.network.MagicCardsResponse
+import com.guvyerhopkins.nautilus.core.network.CardTypeConverter
+import com.guvyerhopkins.nautilus.core.network.MagicCardsResponse
 
 @TypeConverters(CardTypeConverter::class)
 @Database(entities = [MagicCardsResponse::class], version = 1, exportSchema = false)
